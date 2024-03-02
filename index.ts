@@ -3,6 +3,7 @@ import "express-async-errors";
 
 import statusCodes from "./statusCodes";
 import CellphoneRoutes from "./src/routes/cellphone.routes";
+import UserRoutes from "./src/routes/user.routes";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.get("/", (_req, res) => {
 	res.status(statusCodes.OK).send("Hello");
 });
 
+app.use(UserRoutes);
 app.use(CellphoneRoutes);
 
 app.use((err: Error, _req: Request, res: Response, next: NextFunction) => {
