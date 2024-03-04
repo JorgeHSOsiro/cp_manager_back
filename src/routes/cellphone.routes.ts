@@ -1,13 +1,15 @@
 import { Router } from "express";
 import CellphoneController from "../controllers/cellphone.controller";
 
+const validateJWT = require("../auth/validateJWT");
+
 const router = Router();
 const cellphoneController = new CellphoneController();
 
 router
 	.route("/cellphones")
-	.get(cellphoneController.getAll)
-	.post(cellphoneController.addProduct);
+	.get(validateJWT, cellphoneController.getAll)
+	.post(validateJWT, cellphoneController.addProduct);
 router
 	.route("/cellphones/:id")
 	.get(cellphoneController.getProductById)
