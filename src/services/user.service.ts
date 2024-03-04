@@ -25,7 +25,7 @@ export default class UserService {
 		}
 	};
 
-	private getUserById = async (id: number): Promise<UserInterface> => {
+	public getUserById = async (id: number): Promise<UserInterface> => {
 		return this.model.findById(id);
 	};
 
