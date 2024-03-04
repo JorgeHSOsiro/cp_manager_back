@@ -26,7 +26,7 @@ module.exports = async (req: Request, res: Response, next: NextFunction) => {
 		if (!user) {
 			return res.status(statusCodes.UNAUTHORIZED).send("Unauthorized");
 		}
-		req.user = <any>user;
+		req.user = user;
 		next();
 	} catch (err) {
 		return res.status(statusCodes.UNAUTHORIZED).send("Unauthorized");
