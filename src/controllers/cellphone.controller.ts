@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import statusCodes from "../../statusCodes";
+import statusCodes from "../statusCodes";
 import CellphoneService from "../services/cellphone.service";
 
 export default class CellphoneController {

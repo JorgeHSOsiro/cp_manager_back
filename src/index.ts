@@ -2,18 +2,16 @@ import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 
 import statusCodes from "./statusCodes";
-import CellphoneRoutes from "./src/routes/cellphone.routes";
-import UserRoutes from "./src/routes/user.routes";
+import CellphoneRoutes from "./routes/cellphone.routes";
+import UserRoutes from "./routes/user.routes";
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 const PORT = 8000;
-
-app.get("/", (_req, res) => {
-	res.status(statusCodes.OK).send("Hello");
-});
 
 app.use(UserRoutes);
 app.use(CellphoneRoutes);
