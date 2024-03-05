@@ -1,36 +1,15 @@
-import connection from "../models/connection";
-import CellphoneModel from "../models/cellphone.model";
 import { CellphoneInterface } from "../interfaces/cellphone.interface";
-import { validateProperties, validateValues } from "../helper/validation";
 import { BadRequestError, NotFoundError } from "restify-errors";
+import CellphoneModel from "../database/models/cellphone.model";
 
 export default class CellphoneService {
-	private model: CellphoneModel;
-
-	constructor() {
-		this.model = new CellphoneModel(connection);
-	}
-
-	private validateCellphone(cellphone: CellphoneInterface) {
-		const properties = ["name", "brand", "model", "price", "color"];
-		let [valid, property] = validateProperties(cellphone, properties);
-		if (!valid) {
-			return `O campo ${property} é obrigatório.`;
-		}
-
-		[valid, property] = validateValues(cellphone);
-
-		if (!valid) {
-			return `O campo ${property} não pode ser nulo ou vazio.`;
-		}
-	}
+	private model = CellphoneModel;
 
 	public async create(
 		cellphone: CellphoneInterface
 	): Promise<CellphoneInterface> {
-		const isValidCellphone = this.validateCellphone(cellphone);
-		if (typeof isValidCellphone === "string") {
-			throw new BadRequestError(isValidCellphone);
+		if (!cellphone.data || Object.keys(cellphone.data).length === 0) {
+			throw new BadRequestError("Please give more information of the product");
 		}
 		return this.model.create(cellphone);
 	}
@@ -39,28 +18,24 @@ export default class CellphoneService {
 		return this.model.findAll();
 	}
 
-	public async getById(id: number): Promise<CellphoneInterface> {
-		return this.model.findById(id);
+	public async getById(id: number): Promise<CellphoneInterface | null> {
+		return this.model.findByPk(id);
 	}
 
 	public async update(id: number, cellphone: CellphoneInterface) {
-		const isValidCellphone = this.validateCellphone(cellphone);
-		if (typeof isValidCellphone === "string") {
-			throw new BadRequestError(isValidCellphone);
-		}
-		const cellphoneFound = await this.model.findById(id);
+		const cellphoneFound = await this.model.findByPk(id);
 		if (!cellphoneFound) {
 			throw new NotFoundError("Cellphone not found");
 		}
 
-		return this.model.update(id, cellphone);
+		return this.model.update(cellphone, { where: { id } });
 	}
 
 	public async delete(id: number) {
-		const cellphoneFound = await this.model.findById(id);
+		const cellphoneFound = await this.model.findByPk(id);
 		if (!cellphoneFound) {
 			throw new NotFoundError("Cellphone not found");
 		}
-		return this.model.delete(id);
+		return this.model.destroy({ where: { id } });
 	}
 }
