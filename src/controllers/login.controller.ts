@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import UserService from "../services/user.service";
-import statusCodes from "../../statusCodes";
+import statusCodes from "../statusCodes";
 import jwt, { Secret, SignOptions } from "jsonwebtoken";
 
 export default class LoginController {

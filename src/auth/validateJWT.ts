@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { Secret } from "jsonwebtoken";
 import UserService from "../services/user.service";
-import statusCodes from "../../statusCodes";
+import statusCodes from "../statusCodes";
 
 const secret: Secret = <Secret>process.env.JWT_SECRET;
 

@@ -1,16 +1,11 @@
 import { Request, Response } from "express";
-import statusCodes from "../../statusCodes";
+import statusCodes from "../statusCodes";
 import CellphoneService from "../services/cellphone.service";
 
 export default class CellphoneController {
 	private cellphoneService: CellphoneService;
 	constructor(cellphoneService = new CellphoneService()) {
 		this.cellphoneService = cellphoneService;
-		this.getAll = this.getAll.bind(this);
-		this.addProduct = this.addProduct.bind(this);
-		this.getProductById = this.getProductById.bind(this);
-		this.updateProduct = this.updateProduct.bind(this);
-		this.deleteProduct = this.deleteProduct.bind(this);
 	}
 
 	public getAll = async (_req: Request, res: Response) => {

@@ -1,8 +1,6 @@
 export interface CellphoneInterface {
-	id?: number;
-	name: string;
-	brand: string;
-	model: string;
-	price: number;
-	color: string;
+	id: number;
+	data: JSON;
+	createdAt: Date;
+	updatedAt: Date;
 }

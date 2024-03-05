@@ -8,12 +8,14 @@ const cellphoneController = new CellphoneController();
 
 router
 	.route("/cellphones")
-	.get(validateJWT, cellphoneController.getAll)
-	.post(validateJWT, cellphoneController.addProduct);
+	.get(validateJWT, (req, res) => cellphoneController.getAll(req, res))
+	.post(validateJWT, (req, res) => cellphoneController.addProduct(req, res));
 router
 	.route("/cellphones/:id")
-	.get(cellphoneController.getProductById)
-	.put(cellphoneController.updateProduct)
-	.delete(cellphoneController.deleteProduct);
+	.get(validateJWT, (req, res) => cellphoneController.getProductById(req, res))
+	.put(validateJWT, (req, res) => cellphoneController.updateProduct(req, res))
+	.delete(validateJWT, (req, res) =>
+		cellphoneController.deleteProduct(req, res)
+	);
 
 export default router;

@@ -11,10 +11,6 @@ router
 	.post((req, res) => userController.registerUser(req, res))
 	.get((req, res) => userController.findUserByEmail(req, res));
 
-router
-	.route("/user/:id")
-	.delete((req, res) => userController.deleteUser(req, res));
-
 router.post("/login", (req, res) => loginControle.login(req, res));
 
 export default router;

@@ -1,15 +1,11 @@
 import { BadRequestError } from "restify-errors";
 import { validateProperties, validateValues } from "../helper/validation";
 import { UserInterface } from "../interfaces/user.interface";
-import connection from "../models/connection";
-import UserModel from "../models/user.model";
+
+import UserModel from "../database/models/user.model";
 
 export default class UserService {
-	private model: UserModel;
-
-	constructor() {
-		this.model = new UserModel(connection);
-	}
+	private model = UserModel;
 
 	private validateUser = (user: UserInterface) => {
 		const properties = ["name", "email", "password"];
@@ -26,11 +22,19 @@ export default class UserService {
 	};
 
 	public getUserById = async (id: number): Promise<UserInterface> => {
-		return this.model.findById(id);
+		const user = await this.model.findOne({ where: { id } });
+		if (!user) {
+			throw new BadRequestError("User not registered");
+		}
+		return user;
 	};
 
-	public getUserByEmail = async (email: string): Promise<UserInterface> => {
-		return this.model.findByEmail(email);
+	public getUserByEmail = async (
+		email: string
+	): Promise<UserInterface | null> => {
+		const user = await UserModel.findOne({ where: { email } });
+
+		return user;
 	};
 
 	public createUser = async (user: UserInterface): Promise<UserInterface> => {
@@ -43,16 +47,7 @@ export default class UserService {
 		if (emailExists) {
 			throw new BadRequestError("Email already exists");
 		}
-
-		return this.model.create(user);
-	};
-
-	public deleteUser = async (id: number): Promise<UserInterface> => {
-		const userFound = await this.getUserById(id);
-		if (!userFound) {
-			throw new BadRequestError("User not registered");
-		}
-
-		return this.model.delete(id);
+		const newUser = await this.model.create(user);
+		return newUser;
 	};
 }
