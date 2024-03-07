@@ -1,4 +1,5 @@
 import { Options } from "sequelize";
+
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -9,6 +10,12 @@ const config: Options = {
 	host: process.env.POSTGRES_HOST,
 	port: Number(process.env.DB_PORT) || 5432,
 	dialect: "postgres",
+	dialectOptions: {
+		ssl: {
+			require: true,
+			rejectUnauthorized: false,
+		},
+	},
 };
 
 export = config;
