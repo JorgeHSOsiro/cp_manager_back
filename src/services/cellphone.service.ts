@@ -5,9 +5,7 @@ import CellphoneModel from "../database/models/cellphone.model";
 export default class CellphoneService {
 	private model = CellphoneModel;
 
-	public async create(
-		cellphone: CellphoneInterface
-	): Promise<CellphoneInterface> {
+	public async create(cellphone: any): Promise<CellphoneInterface> {
 		if (!cellphone.data || Object.keys(cellphone.data).length === 0) {
 			throw new BadRequestError("Please give more information of the product");
 		}

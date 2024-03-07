@@ -41,7 +41,7 @@ export default class UserService {
 		return user;
 	};
 
-	public createUser = async (user: UserInterface): Promise<UserInterface> => {
+	public createUser = async (user: any): Promise<UserInterface> => {
 		const isValidUser = this.validateUser(user);
 		if (typeof isValidUser === "string") {
 			throw new BadRequestError(isValidUser);
