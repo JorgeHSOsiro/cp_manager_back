@@ -21,6 +21,10 @@ export default class UserService {
 		}
 	};
 
+	public getAllUsers = async (): Promise<UserInterface[]> => {
+		const users = await this.model.findAll();
+		return users;
+	};
 	public getUserById = async (id: number): Promise<UserInterface> => {
 		const user = await this.model.findOne({ where: { id } });
 		if (!user) {

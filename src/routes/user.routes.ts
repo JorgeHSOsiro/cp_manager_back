@@ -9,7 +9,7 @@ const loginControle = new LoginController();
 router
 	.route("/user")
 	.post((req, res) => userController.registerUser(req, res))
-	.get((req, res) => userController.findUserByEmail(req, res));
+	.get((req, res) => userController.findAllUsers(req, res));
 
 router.post("/login", (req, res) => loginControle.login(req, res));
 

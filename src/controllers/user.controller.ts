@@ -9,6 +9,12 @@ export default class UserController {
 		this.userService = userService;
 	}
 
+	public findAllUsers = async (req: Request, res: Response) => {
+		const users = await this.userService.getAllUsers();
+
+		res.status(statusCodes.OK).json(users);
+	};
+
 	public registerUser = async (req: Request, res: Response) => {
 		try {
 			const user = req.body;
