@@ -13,7 +13,9 @@ module.exports = async (req: Request, res: Response, next: NextFunction) => {
 	const userService = new UserService();
 	const bearerToken = req.header("Authorization");
 	if (!bearerToken) {
-		return res.status(statusCodes.UNAUTHORIZED).send("Unauthorized");
+		return res
+			.status(statusCodes.UNAUTHORIZED)
+			.json({ message: "Unauthorized" });
 	}
 
 	const token = extractToken(bearerToken);
@@ -24,11 +26,13 @@ module.exports = async (req: Request, res: Response, next: NextFunction) => {
 		const user = await userService.getUserById((<any>decoded).data.id);
 
 		if (!user) {
-			return res.status(statusCodes.UNAUTHORIZED).send("Unauthorized");
+			return res
+				.status(statusCodes.UNAUTHORIZED)
+				.json({ message: "Unauthorized" });
 		}
 		req.user = user;
 		next();
 	} catch (err) {
-		return res.status(statusCodes.UNAUTHORIZED).send("Unauthorized");
+		return res.status(statusCodes.UNAUTHORIZED).json({ message: err });
 	}
 };

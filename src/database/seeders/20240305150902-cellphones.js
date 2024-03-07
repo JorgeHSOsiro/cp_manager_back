@@ -65,6 +65,28 @@ module.exports = {
 					createdAt: new Date(),
 					updatedAt: new Date(),
 				},
+				{
+					data: JSON.stringify({
+						name: "Samsung galaxy s24",
+						brand: "Samsung",
+						model: "Galaxy S24",
+						price: 6000,
+						color: "white",
+					}),
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					data: JSON.stringify({
+						name: "Samsung galaxy s23",
+						brand: "Samsung",
+						model: "Galaxy S23",
+						price: 4000,
+						color: "black",
+					}),
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
 			],
 			{}
 		);

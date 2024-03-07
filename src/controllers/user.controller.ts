@@ -10,9 +10,14 @@ export default class UserController {
 	}
 
 	public registerUser = async (req: Request, res: Response) => {
-		const user = req.body;
-		const newUser = await this.userService.createUser(user);
-		res.status(statusCodes.CREATED).json(newUser);
+		try {
+			const user = req.body;
+			const newUser = await this.userService.createUser(user);
+
+			res.status(statusCodes.CREATED).json(newUser);
+		} catch (error) {
+			res.status(statusCodes.BAD_REQUEST).json({ error });
+		}
 	};
 
 	public findUserByEmail = async (req: Request, res: Response) => {
